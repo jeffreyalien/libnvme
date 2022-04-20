@@ -325,7 +325,7 @@ static int inet6_pton(nvme_root_t r, const char *src, uint16_t port,
 		nvme_msg(r, LOG_ERR, "cannot copy: %s\n", src);
 
 	const char *scope = NULL;
-	char *p = strchr(tmp, SCOPE_DELIMITER);
+	char *p = strchr(tmp, '%');
 	if (p) {
 		*p = '\0';
 		scope = src + (p - tmp) + 1;
@@ -521,7 +521,7 @@ static int __nvmf_add_ctrl(nvme_root_t r, const char *argstr)
 		 (int)strcspn(argstr,"\n"), argstr);
 	ret = write(fd, argstr, len);
 	if (ret != len) {
-		nvme_msg(r, LOG_ERR, "Failed to write to %s: %s\n",
+		nvme_msg(r, LOG_NOTICE, "Failed to write to %s: %s\n",
 			 nvmf_dev, strerror(errno));
 		ret = -ENVME_CONNECT_WRITE;
 		goto out_close;
@@ -702,8 +702,6 @@ nvme_ctrl_t nvmf_connect_disc_entry(nvme_host_t h,
 		if (!ret)
 			return c;
 	}
-	nvme_msg(h->r, LOG_ERR, "failed to connect controller, error %d\n",
-		 errno);
 	nvme_free_ctrl(c);
 	return NULL;
 }

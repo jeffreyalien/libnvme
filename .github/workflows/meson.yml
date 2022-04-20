@@ -14,15 +14,15 @@ jobs:
     steps:
       - name: install libraries
         run: sudo apt-get install libjson-c-dev
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
       - uses: BSFishy/meson-build@v1.0.3
         with:
           setup-options: --werror
           options: --verbose
           action: test
       # Preserve meson's log file on failure
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: Linux_Meson_Testlog
@@ -33,8 +33,8 @@ jobs:
     steps:
       - name: install libraries
         run: sudo apt-get remove -y libssl-dev
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
       - uses: BSFishy/meson-build@v1.0.3
         with:
           setup-options: --werror
@@ -42,7 +42,7 @@ jobs:
           action: test
           meson-version: 0.61.2
       # Preserve meson's log file on failure
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: Linux_Meson_log
@@ -53,8 +53,8 @@ jobs:
     steps:
       - name: install libraries
         run: sudo apt-get install libjson-c-dev lcov
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
       - uses: BSFishy/meson-build@v1.0.3
         with:
           setup-options: -Db_coverage=true --werror
@@ -64,6 +64,6 @@ jobs:
       - name: Generate Coverage Report
         # Can't use meson here, see https://github.com/mesonbuild/meson/issues/7895
         run: ninja -C build coverage --verbose
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v3
         with:
           fail_ci_if_error: false
