@@ -487,9 +487,9 @@ enum nvme_cmbsts {
 
 enum nvme_crto {
 	NVME_CRTO_CRIMT_SHIFT	= 16,
-	NVME_CRTO_CRIMT_MASK	= 0xffff,
+	NVME_CRTO_CRIMT_MASK	= 0xffff0000,
 	NVME_CRTO_CRWMT_SHIFT	= 0,
-	NVME_CRTO_CRWMT_MASK	= 0xffff,
+	NVME_CRTO_CRWMT_MASK	= 0x0000ffff,
 };
 
 #define NVME_CRTO_CRIMT(crto)	NVME_GET(crto, CRTO_CRIMT)
